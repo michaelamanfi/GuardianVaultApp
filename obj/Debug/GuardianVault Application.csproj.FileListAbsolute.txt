@@ -1,0 +1,20 @@
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\bin\Debug\GuardianVault Application.exe.config
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\bin\Debug\GuardianVault Application.exe
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\bin\Debug\GuardianVault Application.pdb
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\bin\Debug\Newtonsoft.Json.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\bin\Debug\Newtonsoft.Json.xml
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.csproj.SuggestedBindingRedirects.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.Properties.Resources.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.csproj.GenerateResource.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.csproj.CoreCompileInputs.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.csproj.CopyComplete
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.exe
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.pdb
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\bin\Debug\SimpleInjector.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\bin\Debug\SimpleInjector.xml
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.SignInDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.AppMainForm.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.AppSettingsDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.BaseDialogDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.MasterPasswordDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.csproj.AssemblyReference.cache

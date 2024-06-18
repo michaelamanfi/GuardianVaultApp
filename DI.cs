@@ -24,43 +24,45 @@ namespace GuardianVault
         /// <param name="container">The dependency injection container to configure.</param>
         private static void ConfigureServices(Container container)
         {
-            // Register the ApplicationModel with a factory delegate
-            container.Register(typeof(AppSettingsModel), () =>
-            {
-                ISecureStorageService secureStorageManager = new SecureStorageService();
-
-                AppSettingsModel applicationModel;
-                // Conditionally creating or retrieving the ApplicationModel based on persisted data
-                if (secureStorageManager.DoesAppDataExist())
-                {
-                    applicationModel = secureStorageManager.RetrieveAppData();
-                }
-                else
-                {
-                    applicationModel = new AppSettingsModel
-                    {
-                        EncryptedFolderPath = $"{Application.StartupPath}\\MyFiles"
-                    };
-
-                    //Create the root folder if it doesn't already exist.
-                    if (!Directory.Exists(applicationModel.EncryptedFolderPath))
-                        Directory.CreateDirectory(applicationModel.EncryptedFolderPath);
-
-                    secureStorageManager.SaveAppData(applicationModel);
-                }
-                return applicationModel;
-            });
-
             //Register the Main Application Form
             container.Register<AppMainForm, AppMainForm>(Lifestyle.Singleton);
             container.Register<IWin32Window, AppMainForm>(Lifestyle.Singleton);
 
             //Controllers
             container.Register<ISignInController, SignInController>(Lifestyle.Singleton);
-            container.Register<IAppSettingsController, AppSettingsController>(Lifestyle.Singleton);
+            container.Register<IUserSettingsController, UserSettingsController>(Lifestyle.Singleton);
             container.Register<IApplicationController, ApplicationController>(Lifestyle.Singleton);
+            container.Register<ILogger, WindowsEventLogService>(Lifestyle.Singleton);
             
+            // Register the UserSettingsModel with a factory delegate
+            container.Register(typeof(UserSettingsModel), () =>
+            {
+                ISecureStorageService secureStorageManager = new SecureStorageService();
 
+                UserSettingsModel settingsModel;
+                // Conditionally creating or retrieving the UserSettingsModel based on persisted data
+                if (secureStorageManager.DoesAppDataExist())
+                {
+                    settingsModel = secureStorageManager.RetrieveAppData();
+                }
+                else
+                {
+                    //Set up the default user settings.
+                    settingsModel = new UserSettingsModel
+                    {
+                        EncryptedFolderPath = $"{Application.StartupPath}\\MyFiles",
+                        EncryptionLevel = EncryptionLevels.LEVEL3
+                    };
+
+                    //Create the root folder if it does not already exist.
+                    if (!Directory.Exists(settingsModel.EncryptedFolderPath))
+                        Directory.CreateDirectory(settingsModel.EncryptedFolderPath);
+
+                    secureStorageManager.SaveAppData(settingsModel);
+                }
+                return settingsModel;
+            }, Lifestyle.Singleton);
+            
             //Services
             container.Register<ISecureStorageService, SecureStorageService>(Lifestyle.Singleton);
             container.Register<IAuthenticationService, AuthenticationService>(Lifestyle.Singleton);
@@ -68,11 +70,17 @@ namespace GuardianVault
             container.Register<IFileEncryptionService, FileEncryptionService>(Lifestyle.Singleton);
             container.Register<IEncryptionService, EncryptionService>(Lifestyle.Singleton);
             container.Register<IListViewUIService, ListViewUIService>(Lifestyle.Singleton);
-
+            container.Register<ISystemIdentifierService, SystemIdentifierService>(Lifestyle.Singleton);
+            
             //Views
-            container.Register<IView<AppSettingsModel>, AppSettingsView>(Lifestyle.Singleton);
+            container.Register<IView<UserSettingsModel>, UserSettingsView>(Lifestyle.Singleton);
             container.Register<IView<SignInModel>, SignInView>(Lifestyle.Singleton);
             container.Register<IView<MasterPasswordModel>, MasterPasswordView>(Lifestyle.Singleton);
+            container.Register<IView<FolderModel>, AddFolderView>(Lifestyle.Singleton);
+            container.Register<IView<FileModel[]>, SelectFilesView>(Lifestyle.Singleton);
+
+            container.Register<IView<string>, BrowseFolderView>(Lifestyle.Singleton);
+
             container.Register<ITreeViewUIService, TreeViewUIService>(Lifestyle.Singleton);
                       
         }

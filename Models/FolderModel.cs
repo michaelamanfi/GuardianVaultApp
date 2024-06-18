@@ -12,6 +12,11 @@ namespace GuardianVault
     public class FolderModel
     {
         /// <summary>
+        /// Gets or sets the root folder.
+        /// </summary>
+        public bool IsRoot { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the folder.
         /// </summary>
         public string Name { get; set; }

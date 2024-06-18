@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace GuardianVault
 {
+    /// <summary>
+    /// Represents the view for user sign-in.
+    /// </summary>
     public partial class SignInView : IView<SignInModel>
     {
-        public SignInView()
-        {
-        }
-
+        /// <summary>
+        /// Displays the sign-in dialog as a modal window and returns the sign-in model with the authentication result.
+        /// </summary>
+        /// <param name="parent">The parent window for this view, used to center the dialog.</param>
+        /// <param name="model">The sign-in model to be used and potentially modified in the dialog.</param>
+        /// <returns>An updated <see cref="SignInModel"/> reflecting the outcome of the sign-in attempt.</returns>
         public SignInModel ShowView(IWin32Window parent, SignInModel model)
         {
             using (SignInDlg dlg = new SignInDlg())
@@ -23,9 +20,8 @@ namespace GuardianVault
                 // Show the dialog as a modal window and check if the user clicked OK
                 if (dlg.ShowDialog(parent) == DialogResult.OK)
                 {
-                    // If sign-in is successful, update the user name in upper case
+                    // If sign-in is successful, update the user name in upper case and set Authenticated to true
                     return new SignInModel { UserName = dlg.UserName.ToUpper(), Authenticated = true };
-
                 }
                 else
                 {

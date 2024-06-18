@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuardianVault Application", "GuardianVault Application.csproj", "{ED013224-6DB3-45DE-A8D4-BFE25EC409FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{2580AFAB-3260-40F7-A518-971277F2A2FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{ED013224-6DB3-45DE-A8D4-BFE25EC409FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED013224-6DB3-45DE-A8D4-BFE25EC409FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED013224-6DB3-45DE-A8D4-BFE25EC409FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2580AFAB-3260-40F7-A518-971277F2A2FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2580AFAB-3260-40F7-A518-971277F2A2FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2580AFAB-3260-40F7-A518-971277F2A2FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2580AFAB-3260-40F7-A518-971277F2A2FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

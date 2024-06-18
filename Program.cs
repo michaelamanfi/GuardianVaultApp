@@ -20,8 +20,37 @@ namespace GuardianVault
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Handle exceptions on Windows Forms threads
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
+
+            // Set the unhandled exception mode to force all Windows Forms errors to go through our handler.
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+            // Handle exceptions on non-UI threads
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+
+
             // Run the main form
             Application.Run(DI.Container.GetInstance<AppMainForm>());
+        }
+
+        private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            var mainForm = DI.Container.GetInstance<AppMainForm>();
+            var app = DI.Container.GetInstance<IApplicationController>();
+            if (e.Exception as CryptographicException != null)
+            {
+                app.ShowAppErrorMessage(mainForm, $"File encryption/decryption operation failed. Please verify that your master password is correct.");
+            }
+            else
+            {
+                app.ShowAppErrorMessage(mainForm, $"An error has occured: {e.Exception.Message}");
+            }
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Application_ThreadException(sender, new System.Threading.ThreadExceptionEventArgs(e.ExceptionObject as Exception));
         }
     }
 }

@@ -19,13 +19,13 @@
         /// <summary>
         /// Retrieves data from the specified file in secure storage.
         /// </summary>
-        /// <returns>The retrieved data as a <see cref="AppSettingsModel"/>.</returns>
-        AppSettingsModel RetrieveAppData();
+        /// <returns>The retrieved data as a <see cref="UserSettingsModel"/>.</returns>
+        UserSettingsModel RetrieveAppData();
 
         /// <summary>
         /// Stores the specified data in secure storage.
         /// </summary>
-        /// <param name="data">The data to store as a <see cref="AppSettingsModel"/>.</param>
-        void SaveAppData( AppSettingsModel data);
+        /// <param name="data">The data to store as a <see cref="UserSettingsModel"/>.</param>
+        void SaveAppData( UserSettingsModel data);
     }
 }

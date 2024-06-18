@@ -17,8 +17,12 @@ namespace GuardianVault
       /// </summary>
       /// <param name="fileName">The name of the file to store the data in.</param>
       /// <param name="data">The data to store.</param>
-        public void SaveAppData(AppSettingsModel data)
+        public void SaveAppData(UserSettingsModel data)
         {
+            var passwordModel = data.PasswordModel;
+            if (data.PasswordModel != null && !data.PasswordModel.RememberSecret)
+                data.PasswordModel = null;
+
             string jsonData = JsonConvert.SerializeObject(data);
 
             using (IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly())
@@ -31,6 +35,8 @@ namespace GuardianVault
                     }
                 }
             }
+
+            data.PasswordModel = passwordModel;
         }
 
         /// <summary>
@@ -38,7 +44,7 @@ namespace GuardianVault
         /// </summary>
         /// <param name="fileName">The name of the file to retrieve the data from.</param>
         /// <returns>The retrieved data.</returns>
-        public AppSettingsModel RetrieveAppData()
+        public UserSettingsModel RetrieveAppData()
         {
             using (IsolatedStorageFile isolatedStorage = IsolatedStorageFile.GetUserStoreForAssembly())
             {
@@ -49,7 +55,7 @@ namespace GuardianVault
                         using (StreamReader reader = new StreamReader(stream))
                         {
                             string jsonData = reader.ReadToEnd();
-                            return JsonConvert.DeserializeObject<AppSettingsModel>(jsonData);
+                            return JsonConvert.DeserializeObject<UserSettingsModel>(jsonData);
                         }
                     }
                 }

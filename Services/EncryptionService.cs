@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Management;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,34 +13,14 @@ namespace GuardianVault
     /// </summary>
     public class EncryptionService : IEncryptionService
     {
+        private readonly ISystemIdentifierService systemIdentifierService;
+        public EncryptionService(ISystemIdentifierService systemIdentifierService)
+        {
+            this.systemIdentifierService = systemIdentifierService;
+        }
+
         // Constant to ensure the password is long enough
-        public const string KEY_PART = "04CAADA9-2899-4EF9-BDEE-85351F282058";
-
-        /// <summary>
-        /// Encrypts the given plain text using the specified password.
-        /// </summary>
-        /// <param name="password">The password used to generate the encryption key.</param>
-        /// <param name="plainText">The plain text to be encrypted.</param>
-        /// <returns>The encrypted text as a Base64 encoded string.</returns>
-        public string EncryptWithPassword(string plainText, string password)
-        {
-            byte[] data = Encoding.UTF8.GetBytes(plainText);
-            byte[] encryptedData = EncryptWithPassword(data, password.Trim());
-            return Convert.ToBase64String(encryptedData);
-        }
-
-        /// <summary>
-        /// Decrypts the given encrypted text using the specified password.
-        /// </summary>
-        /// <param name="password">The password used to generate the decryption key.</param>
-        /// <param name="encryptedText">The encrypted text as a Base64 encoded string.</param>
-        /// <returns>The decrypted plain text.</returns>
-        public string DecryptWithPassword(string encryptedText, string password)
-        {
-            byte[] encryptedData = Convert.FromBase64String(encryptedText);
-            byte[] decryptedData = DecryptWithPassword(encryptedData, password.Trim());
-            return Encoding.UTF8.GetString(decryptedData);
-        }
+        public const string KEY_PART = "04CAADA9-2899-4EF9-BDEE-85351F282058";       
 
         /// <summary>
         /// Encrypts the given data using the specified password.
@@ -47,9 +28,20 @@ namespace GuardianVault
         /// <param name="password">The password used to generate the encryption key.</param>
         /// <param name="data">The data to be encrypted.</param>
         /// <returns>The encrypted data as a byte array.</returns>
-        public byte[] EncryptWithPassword(byte[] data, string password)
+        public byte[] EncryptWithPassword(byte[] data, string password, EncryptionLevels encryptionLevels)
         {
             string keySource = $"{KEY_PART}{password}";
+            if(encryptionLevels != EncryptionLevels.LEVEL2)
+            {
+                string cpuId = systemIdentifierService.GetCpuId();
+                keySource = $"{KEY_PART}{cpuId}{password}";
+            }
+            else if (encryptionLevels != EncryptionLevels.LEVEL3)
+            {
+                string cpuId = systemIdentifierService.GetCpuId();
+                string motherBoardId = systemIdentifierService.GetMotherboardSerialNumber();
+                keySource = $"{KEY_PART}{cpuId}{motherBoardId}{password}";
+            }
 
             // Compute hash from the key source
             byte[] hashKey = EncryptionService.ComputeHash(keySource);
@@ -81,9 +73,20 @@ namespace GuardianVault
         /// <param name="password">The password used to generate the decryption key.</param>
         /// <param name="data">The data to be decrypted.</param>
         /// <returns>The decrypted data as a byte array.</returns>
-        public byte[] DecryptWithPassword(byte[] data, string password)
+        public byte[] DecryptWithPassword(byte[] data, string password, EncryptionLevels encryptionLevels)
         {
             string keySource = $"{KEY_PART}{password}";
+            if (encryptionLevels != EncryptionLevels.LEVEL2)
+            {
+                string cpuId = systemIdentifierService.GetCpuId();
+                keySource = $"{KEY_PART}{cpuId}{password}";
+            }
+            else if (encryptionLevels != EncryptionLevels.LEVEL3)
+            {
+                string cpuId = systemIdentifierService.GetCpuId();
+                string motherBoardId = systemIdentifierService.GetMotherboardSerialNumber();
+                keySource = $"{KEY_PART}{cpuId}{motherBoardId}{password}";
+            }
 
             // Compute hash from the key source
             byte[] hashKey = EncryptionService.ComputeHash(keySource);
@@ -205,7 +208,7 @@ namespace GuardianVault
         /// </summary>
         /// <param name="input">The input string to be hashed.</param>
         /// <returns>The computed hash as a byte array.</returns>
-        public static byte[] ComputeHash(string input)
+        private static byte[] ComputeHash(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
             {

@@ -1,0 +1,33 @@
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\GuardianVault Application.exe.config
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\GuardianVault Application.exe
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\Newtonsoft.Json.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\SimpleInjector.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\Newtonsoft.Json.xml
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\SimpleInjector.xml
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\cs\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\de\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\es\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\fr\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\it\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\ja\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\ko\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\pl\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\pt-BR\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\ru\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\tr\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\zh-Hans\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\GuardianVaultApp\bin\Debug\zh-Hant\Microsoft.CodeAnalysis.LiveUnitTesting.Runtime.resources.dll
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault Application.csproj.AssemblyReference.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault Application.csproj.SuggestedBindingRedirects.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault.AddFolderDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault.MasterPasswordDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault.SignInDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault.AppMainForm.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault.Properties.Resources.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault.UserSettingsDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault.BaseDialogDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault Application.csproj.GenerateResource.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault Application.csproj.CoreCompileInputs.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault Application.csproj.CopyComplete
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\GuardianVault Application\Debug\GuardianVault Application.exe

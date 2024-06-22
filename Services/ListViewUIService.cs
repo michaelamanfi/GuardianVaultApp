@@ -43,7 +43,8 @@ namespace GuardianVault
                     Path = fileInfo.FullName,
                     FileType = fileManagementService.GetFileTypeForFileExtension(fileInfo.Extension),
                     ModifiedDate = fileInfo.LastWriteTime,
-                    Status = File.GetAttributes(file).HasFlag(FileAttributes.ReadOnly) ? "Read-Only" : "Writable"
+                    Status = File.GetAttributes(file).HasFlag(FileAttributes.ReadOnly) ? "Read-Only" : "Writable",
+                    SizeInKB = Math.Round((double)(fileInfo.Length/1024),1),
                 };
 
                 string newFilePath = fileManagementService.GetOriginalFile(fileModel);
@@ -53,7 +54,7 @@ namespace GuardianVault
                 listViewItem.ImageIndex = File.Exists(newFilePath) ? 1 : 0;
                 listViewItem.SubItems.Add(fileModel.ModifiedDate.ToString());
                 listViewItem.SubItems.Add(fileModel.FileType);
-                listViewItem.SubItems.Add(fileModel.Status);
+                listViewItem.SubItems.Add(fileInfo.Length > 1 * 1024 * 1024 ? Math.Round(fileModel.SizeInKB / 1024,1) + " MB" : fileModel.SizeInKB + " KB");
                 listView.Items.Add(listViewItem);
             }
         }

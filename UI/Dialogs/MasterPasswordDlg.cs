@@ -25,6 +25,9 @@ namespace GuardianVault
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (this.txtPassword.IsEmptyOrWhiteSpace(this, "Password"))
+                return;
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

@@ -22,6 +22,12 @@ namespace GuardianVault
         /// <param name="password">The password used to generate the encryption key.</param>
         public string EncryptFile(string filePath, string password,EncryptionLevels encryptionLevels)
         {
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentNullException("filePath");
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException("password");
+
             // Check if the file exists
             if (!File.Exists(filePath))
             {
@@ -52,6 +58,12 @@ namespace GuardianVault
         /// <param name="password">The password used to generate the decryption key.</param>
         public string DecryptFile(string encryptedFilePath, string password, EncryptionLevels encryptionLevels)
         {
+            if (string.IsNullOrWhiteSpace(encryptedFilePath))
+                throw new ArgumentNullException("filePath");
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException("password");
+
             // Check if the file exists
             if (!File.Exists(encryptedFilePath))
             {

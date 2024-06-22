@@ -138,6 +138,7 @@
     <Compile Include="UI\Dialogs\UserSettingsDlg.Designer.cs">
       <DependentUpon>UserSettingsDlg.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\NormalTreeNodeComparer.cs" />
     <Compile Include="Views\AddFolderView.cs" />
     <Compile Include="Views\BrowseFolderView.cs" />

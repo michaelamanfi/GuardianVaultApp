@@ -30,6 +30,12 @@ namespace GuardianVault
         /// <returns>The encrypted data as a byte array.</returns>
         public byte[] EncryptWithPassword(byte[] data, string password, EncryptionLevels encryptionLevels)
         {
+            if (data == null || data.Length <= 0)
+                throw new ArgumentNullException(nameof(data));
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException(nameof(password));
+
             string keySource = $"{KEY_PART}{password}";
             if(encryptionLevels != EncryptionLevels.LEVEL2)
             {
@@ -75,6 +81,12 @@ namespace GuardianVault
         /// <returns>The decrypted data as a byte array.</returns>
         public byte[] DecryptWithPassword(byte[] data, string password, EncryptionLevels encryptionLevels)
         {
+            if (data == null || data.Length <= 0)
+                throw new ArgumentNullException(nameof(data));
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentNullException(nameof(password));
+
             string keySource = $"{KEY_PART}{password}";
             if (encryptionLevels != EncryptionLevels.LEVEL2)
             {

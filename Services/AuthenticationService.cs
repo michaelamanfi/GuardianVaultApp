@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Security.Principal;
 
 namespace GuardianVault
@@ -53,7 +54,6 @@ namespace GuardianVault
                 if (!success)
                 {
                     int error = Marshal.GetLastWin32Error();
-                    Console.WriteLine("LogonUser failed with error code: " + error);
                     return false;
                 }
 

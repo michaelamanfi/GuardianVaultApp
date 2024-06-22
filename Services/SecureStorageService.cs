@@ -19,6 +19,9 @@ namespace GuardianVault
       /// <param name="data">The data to store.</param>
         public void SaveAppData(UserSettingsModel data)
         {
+            if(data == null)
+                throw new ArgumentNullException(nameof(data)); 
+
             var passwordModel = data.PasswordModel;
             if (data.PasswordModel != null && !data.PasswordModel.RememberSecret)
                 data.PasswordModel = null;

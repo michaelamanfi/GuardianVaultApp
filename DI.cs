@@ -1,4 +1,5 @@
-﻿using SimpleInjector;
+﻿
+using SimpleInjector;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Windows.Forms;
 
 namespace GuardianVault
 {
+    public delegate bool UseWaitWindowCheckAction();
     /// <summary>
     /// Responsible for setting up and managing dependency injection using Simple Injector.
     /// This class centralizes the configuration of services and their dependencies.

@@ -18,3 +18,4 @@ C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\
 C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.MasterPasswordDlg.resources
 C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.UserSettingsDlg.resources
 C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault.AddFolderDlg.resources
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\obj\Debug\GuardianVault Application.csproj.AssemblyReference.cache

@@ -14,7 +14,7 @@ namespace GuardianVault
         /// <param name="parentFolder">The parent folder.</param>
         /// <param name="folderName">The name of the folder to validate</param>
         /// <returns></returns>
-        bool IsValidFolderName(FolderModel parentFolder,string folderName);
+        bool IsValidFolderName(FolderModel parentFolder, string folderName);
 
         /// <summary>
         /// Checks if a file at a specified path is writable.

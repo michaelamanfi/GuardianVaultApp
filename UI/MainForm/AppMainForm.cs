@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -64,7 +65,6 @@ namespace GuardianVault
 
             //Initialize default properties
             this.treeFiles.ShowLines = true;
-            this.decryptedFileMonitor.Enabled = false;
         }
 
         /// <summary>
@@ -147,7 +147,6 @@ namespace GuardianVault
             this.addNewFolderToolStripMenuItem.Enabled = value;
             this.addFilesToolStripMenuItem.Enabled = value;
             this.deleteFolderToolStripMenuItem.Enabled = value;
-            this.downloadFolderToolStripMenuItem.Enabled = value;
             this.exploreFolderToolStripMenuItem.Enabled = value;
             this.refreshToolStripMenuItem.Enabled = true;
         }
@@ -188,7 +187,7 @@ namespace GuardianVault
             this.deleteFileMenuItem.Enabled = value;
             this.openEditFileMenuItem.Enabled = value;
             this.encryptFileToolStripMenuItem.Enabled = value;
-            this.exploreFolderFileToolStripMenuItem.Enabled= value;
+            this.exploreFolderFileToolStripMenuItem.Enabled = value;
         }
         private void lstFilesContextMenu_Opening(object sender, CancelEventArgs e)
         {
@@ -219,11 +218,11 @@ namespace GuardianVault
             }
 
             //Update the menu item label.
-            this.deleteFileMenuItem.Text = 
+            this.deleteFileMenuItem.Text =
                 this.lstFiles.SelectedItems.Count > 1 ? "Delete Files" : "Delete File";
-            this.downloadFileMenuItem.Text = 
+            this.downloadFileMenuItem.Text =
                 this.lstFiles.SelectedItems.Count > 1 ? "Download Files" : "Download File";
-            this.encryptFileToolStripMenuItem.Text = 
+            this.encryptFileToolStripMenuItem.Text =
                 this.lstFiles.SelectedItems.Count > 1 ? "Encrypt Files" : "Encrypt File";
         }
 
@@ -266,6 +265,7 @@ namespace GuardianVault
                     this.Cursor = Cursors.WaitCursor;
                     string[] fileNames = files.Select(fm => fm.Path).ToArray();
 
+
                     // Iterate through all selected files
                     foreach (string fileName in fileNames)
                     {
@@ -291,6 +291,7 @@ namespace GuardianVault
 
                     // Reload the list of files in the lstFiles control to reflect the added files
                     listViewUIService.LoadFiles(this.lstFiles, folderModel);
+
                 }
                 finally
                 {
@@ -329,10 +330,12 @@ namespace GuardianVault
                     // Set the cursor to the wait cursor to indicate processing
                     this.Cursor = Cursors.WaitCursor;
 
-                    foreach (ListViewItem listViewItem in this.lstFiles.SelectedItems)
-                    {
-                        FileModel fileModel = (FileModel)listViewItem.Tag;
+                    IEnumerable<ListViewItem> selectedItems = this.lstFiles.SelectedItems.Cast<ListViewItem>().Where(s => s.Tag as FileModel != null);
 
+                    var files = selectedItems.Select(file => file.Tag as FileModel).ToList();
+
+                    foreach (FileModel fileModel in files)
+                    {
                         string decryptedFile = fileEncryptionService.DecryptFile(fileModel.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
 
                         File.Copy(decryptedFile, $"{selectedPath}\\" + Path.GetFileName(decryptedFile), true);
@@ -372,8 +375,8 @@ namespace GuardianVault
             {
                 // Set the cursor to the wait cursor to indicate processing
                 this.Cursor = Cursors.WaitCursor;
-
                 FileModel fileModel = (FileModel)this.lstFiles.SelectedItems[0].Tag;
+
 
                 string fileToOpen = fileManagementService.GetOriginalFile(fileModel);
 
@@ -392,6 +395,7 @@ namespace GuardianVault
                 }
 
                 this.refreshFilesMenuItem_Click(null, null);
+
             }
             finally
             {
@@ -498,40 +502,6 @@ namespace GuardianVault
             }
         }
 
-        private static object timerRunning = new object();
-        private void decryptedFileMonitor_Tick(object sender, EventArgs e)
-        {
-            if (!Monitor.TryEnter(timerRunning))
-                return;
-
-            try
-            {
-                // Resolve the application controller and retrieve the master password model
-                MasterPasswordModel masterPasswordModel = (DI.Container.GetInstance<IApplicationController>()).GetMasterPassword();
-
-                // Check if the master password has a key
-                if (!masterPasswordModel.HasKey)
-                    return;
-
-                var files = fileManagementService.GetFilesPendingEncryption(userSettingsModel.EncryptedFolderPath);
-                foreach (var file in files)
-                {
-                    if (fileManagementService.IsFileWritable(file.Path))
-                    {
-                        //File is writable so encrypt it
-                        fileEncryptionService.EncryptFile(file.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
-
-                        //Delete the original file
-                        File.Delete(file.Path);
-                    }
-                }
-            }
-            finally
-            {
-                Monitor.Exit(timerRunning);
-            }
-        }
-
         private void encryptFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.lstFiles.SelectedItems.Count == 0)
@@ -561,6 +531,7 @@ namespace GuardianVault
                 // Set the cursor to the wait cursor to indicate processing
                 this.Cursor = Cursors.WaitCursor;
 
+
                 foreach (FileModel fileModel in list)
                 {
                     string originalFile = fileManagementService.GetOriginalFile(fileModel);
@@ -580,6 +551,7 @@ namespace GuardianVault
 
                 // Reload the list of files in the lstFiles control to reflect the added files
                 listViewUIService.LoadFiles(this.lstFiles, (FolderModel)this.lstFiles.Tag);
+
             }
             finally
             {

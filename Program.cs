@@ -23,7 +23,7 @@ namespace GuardianVault
             // Handle exceptions on Windows Forms threads
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
 
-            // Set the unhandled exception mode to force all Windows Forms errors to go through our handler.
+            // Set the unhandled exception mode to force all Windows Forms errors to go through one handler.
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
             // Handle exceptions on non-UI threads

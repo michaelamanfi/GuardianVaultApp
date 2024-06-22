@@ -133,7 +133,7 @@ namespace GuardianVault
                 throw new ArgumentException("The provided folder path is invalid.");
             }
 
-            return GetFolder(folderPath,true);
+            return GetFolder(folderPath, true);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace GuardianVault
 
             foreach (var subFolder in Directory.GetDirectories(folderPath))
             {
-                folder.Folders.Add(GetFolder(subFolder,false));
+                folder.Folders.Add(GetFolder(subFolder, false));
             }
 
             return folder;
@@ -266,7 +266,7 @@ namespace GuardianVault
         /// <returns></returns>
         public bool IsValidFolderName(FolderModel parentFolder, string folderName)
         {
-            if(parentFolder == null)
+            if (parentFolder == null)
                 throw new ArgumentNullException(nameof(parentFolder));
 
             // Folder name should not be empty or consist only of white space.

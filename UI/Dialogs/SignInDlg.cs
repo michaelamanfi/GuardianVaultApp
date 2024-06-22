@@ -26,6 +26,12 @@ namespace GuardianVault
         public string UserName { get; private set; }
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (this.txtUserName.IsEmptyOrWhiteSpace(this, "UserName"))
+                return;
+
+            if (this.txtPassword.IsEmptyOrWhiteSpace(this, "Password"))
+                return;
+
             var authService = DI.Container.GetInstance<IAuthenticationService>();
             if (authService.AuthenticateUser(this.txtUserName.Text.Trim(),this.txtPassword.Text.Trim()))
             {

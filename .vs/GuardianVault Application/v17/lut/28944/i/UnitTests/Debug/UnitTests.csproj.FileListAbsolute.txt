@@ -1,0 +1,7 @@
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\UnitTests\bin\Debug\UnitTests.exe.config
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\b\UnitTests\bin\Debug\UnitTests.exe
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\UnitTests\Debug\UnitTests.csproj.AssemblyReference.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\UnitTests\Debug\UnitTests.csproj.SuggestedBindingRedirects.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\UnitTests\Debug\UnitTests.csproj.CoreCompileInputs.cache
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\UnitTests\Debug\UnitTests.csproj.CopyComplete
+C:\OneDrive\BS Software Development\Program Capstone\GuardianVaultApp\.vs\GuardianVault Application\v17\lut\0\i\UnitTests\Debug\UnitTests.exe

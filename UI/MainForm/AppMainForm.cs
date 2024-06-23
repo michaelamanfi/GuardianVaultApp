@@ -70,8 +70,8 @@ namespace GuardianVault
         /// <summary>
         /// Handles the Loading event of the form.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        /// <param name="sender"></param>
+        /// <param name="e">.</param>
         private void Form_Loading(object sender, EventArgs e)
         {
             // Add implementation here
@@ -80,13 +80,18 @@ namespace GuardianVault
         /// <summary>
         /// Handles the Closing event of the form.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="FormClosingEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form_Closing(object sender, FormClosingEventArgs e)
         {
             // Add implementation here
         }
 
+        /// <summary>
+        /// Handles the 'Shown' event of the form. This event is triggered after the form is first displayed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form_Shown(object sender, EventArgs e)
         {
             // Call the SignIn method to display the sign-in dialog and capture the result.
@@ -130,26 +135,46 @@ namespace GuardianVault
             }
         }
 
+        /// <summary>
+        /// This event is triggered when the user clicks the master password button, used to set or change the master password.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void masterPasswordToolStripButton_Click(object sender, EventArgs e)
         {
             //Update the master password, if necessary.
             app.UpdateMasterPassword();
         }
 
+        /// <summary>
+        /// This event is triggered when the user clicks the settings button, used to open the user settings dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void settingsToolStripButton_Click(object sender, EventArgs e)
         {
             //Update the app settings.
             appSettings.UpdateUserSettings();
 
         }
+        /// <summary>
+        /// Enables or disables the folder-related menu items based on the specified boolean value.
+        /// </summary>
+        /// <param name="value">Boolean value indicating whether the folder menu should be enabled (true) or disabled (false).</param>
         private void EnableDisableFolderMenu(bool value)
         {
+
             this.addNewFolderToolStripMenuItem.Enabled = value;
             this.addFilesToolStripMenuItem.Enabled = value;
             this.deleteFolderToolStripMenuItem.Enabled = value;
             this.exploreFolderToolStripMenuItem.Enabled = value;
             this.refreshToolStripMenuItem.Enabled = true;
         }
+        /// <summary>
+        /// Handles the 'Opening' event of a context menu for a tree view. This event is triggered right before the context menu is displayed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeContextMenu_Opening(object sender, CancelEventArgs e)
         {
             EnableDisableFolderMenu(false);
@@ -165,12 +190,22 @@ namespace GuardianVault
             }
         }
 
+        /// <summary>
+        /// Handles the MouseUp event for a tree view control. This method is called when a mouse button is released over the tree view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeFolder_MouseUp(object sender, MouseEventArgs e)
         {
             //Select the node on mouse up
             this.treeViewUIService.SelectNodeOnMouseUp(this.treeFiles, this.treeContextMenu, e);
         }
 
+        /// <summary>
+        /// This method is invoked when a node in the tree view is clicked with the mouse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeFolder_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             var selectedNode = e.Node;
@@ -179,6 +214,10 @@ namespace GuardianVault
                 listViewUIService.LoadFiles(this.lstFiles, selectedNode.Tag as FolderModel);
             }
         }
+        /// <summary>
+        /// Enables or disables file-related menu items based on the specified boolean value.
+        /// </summary>
+        /// <param name="value">Boolean value indicating whether the file menu should be enabled (true) or disabled (false).</param>
         private void EnableDisableFileMenu(bool value)
         {
             this.refreshFilesMenuItem.Enabled = value;
@@ -189,11 +228,19 @@ namespace GuardianVault
             this.encryptFileToolStripMenuItem.Enabled = value;
             this.exploreFolderFileToolStripMenuItem.Enabled = value;
         }
+        /// <summary>
+        /// Handles the 'Opening' event of the context menu for the file list in a ListView, enabling or disabling menu items and adjusting their labels accordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">.</param>
         private void lstFilesContextMenu_Opening(object sender, CancelEventArgs e)
         {
+            // Initially disable all file-related menu options
             EnableDisableFileMenu(false);
+            
             if (this.lstFiles.SelectedItems.Count > 0 && this.lstFiles.SelectedItems[0].Tag as FileModel != null)
             {
+                // Enable file-related menu items since a file is selected
                 EnableDisableFileMenu(true);
             }
             else if (this.lstFiles.Items.Count > 0)
@@ -202,6 +249,7 @@ namespace GuardianVault
                 FolderModel folderModel = this.lstFiles.Tag as FolderModel;
                 if (folderModel != null)
                 {
+                    // Enable menu items related to folder operations like adding files or refreshing the file list
                     this.addFilesMenuItem.Enabled = true;
                     this.refreshFilesMenuItem.Enabled = true;
                 }
@@ -212,26 +260,23 @@ namespace GuardianVault
                 FolderModel folderModel = this.lstFiles.Tag as FolderModel;
                 if (folderModel != null)
                 {
+                    // Enable menu items specific to folder exploration
                     this.addFilesMenuItem.Enabled = true;
                     this.exploreFolderFileToolStripMenuItem.Enabled = true;
                 }
             }
 
-            //Update the menu item label.
-            this.deleteFileMenuItem.Text =
-                this.lstFiles.SelectedItems.Count > 1 ? "Delete Files" : "Delete File";
-            this.downloadFileMenuItem.Text =
-                this.lstFiles.SelectedItems.Count > 1 ? "Download Files" : "Download File";
-            this.encryptFileToolStripMenuItem.Text =
-                this.lstFiles.SelectedItems.Count > 1 ? "Encrypt Files" : "Encrypt File";
+            // Update the label of the delete, download, and encrypt menu items based on the number of selected items. This helps provide context-sensitive labels to the user
+            this.deleteFileMenuItem.Text = this.lstFiles.SelectedItems.Count > 1 ? "Delete Files" : "Delete File";
+            this.downloadFileMenuItem.Text = this.lstFiles.SelectedItems.Count > 1 ? "Download Files" : "Download File";
+            this.encryptFileToolStripMenuItem.Text = this.lstFiles.SelectedItems.Count > 1 ? "Encrypt Files" : "Encrypt File";
         }
 
         /// <summary>
-        /// Handles the Click event of the addFilesMenuItem. This method is responsible for initiating the file
-        /// addition and encryption process based on the selected files from an OpenFileDialog.
+        /// This method is responsible for initiating the file addition and encryption process based on the selected files.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">An EventArgs that contains no event data.</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addFilesMenuItem_Click(object sender, EventArgs e)
         {
             // Resolve the application controller and retrieve the master password model
@@ -301,25 +346,30 @@ namespace GuardianVault
             }
         }
 
+        /// <summary>
+        /// This function is designed to download and decrypt files selected in a ListView. It checks if files are selected, retrieves a master password, and processes file decryption and copying to a user-selected directory.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void downloadFileMenuItem_Click(object sender, EventArgs e)
         {
             if (this.lstFiles.SelectedItems.Count == 0)
             {
                 this.app.ShowErrorMessage(this, "No file has been selected. Please select the files you wish to decrypt.");
-
                 return;
             }
 
-            // Retrieve the master password model
+            // Retrieve the master password
             MasterPasswordModel masterPasswordModel = (DI.Container.GetInstance<IApplicationController>()).GetMasterPassword();
 
-            // Check if the master password has a key; if not, display a warning message and exit the method
+            // Ensure that a master password has been set before proceeding
             if (!masterPasswordModel.HasKey)
             {
-                MessageBox.Show(this, "No files were downloaded.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, "No files were downloaded because a master password is not available.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Prompt user to select a folder to save the decrypted files
             var browseFolderView = DI.Container.GetInstance<IView<string>>();
             var selectedPath = browseFolderView.ShowView(this, "Please select the folder where you wish to put the decrypted files.");
 
@@ -327,66 +377,71 @@ namespace GuardianVault
             {
                 try
                 {
-                    // Set the cursor to the wait cursor to indicate processing
                     this.Cursor = Cursors.WaitCursor;
 
-                    IEnumerable<ListViewItem> selectedItems = this.lstFiles.SelectedItems.Cast<ListViewItem>().Where(s => s.Tag as FileModel != null);
+                    // Filter and cast selected items to FileModel
+                    IEnumerable<ListViewItem> selectedItems = this.lstFiles.SelectedItems.Cast<ListViewItem>().Where(item => item.Tag as FileModel != null);
+                    var files = selectedItems.Select(item => item.Tag as FileModel).ToList();
 
-                    var files = selectedItems.Select(file => file.Tag as FileModel).ToList();
-
+                    // Decrypt and copy each selected file to the chosen path
                     foreach (FileModel fileModel in files)
                     {
+                        // Decrypt the file and obtain the path of the decrypted file
                         string decryptedFile = fileEncryptionService.DecryptFile(fileModel.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
 
-                        File.Copy(decryptedFile, $"{selectedPath}\\" + Path.GetFileName(decryptedFile), true);
+                        // Copy the decrypted file to the selected path
+                        File.Copy(decryptedFile, Path.Combine(selectedPath, Path.GetFileName(decryptedFile)), true);
 
+                        // Delete the decrypted file after copying if it's a temporary file
                         File.Delete(decryptedFile);
                     }
 
+                    // Open the destination folder in Windows Explorer
                     app.OpenFolderInExplorer(this, selectedPath);
                 }
                 finally
                 {
-                    // Reset the cursor to the default cursor after processing is complete
                     this.Cursor = Cursors.Default;
                 }
             }
         }
 
+        /// <summary>
+        /// Handles the click event for the "Open/Edit" menu item. This method attempts to open the selected file for viewing or editing, decrypting it if necessary.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openEditFileMenuItem_Click(object sender, EventArgs e)
         {
             if (this.lstFiles.SelectedItems.Count == 0)
             {
-                this.app.ShowErrorMessage(this, "No file has been selected. Please select the files you wish to decrypt.");
-
+                this.app.ShowErrorMessage(this, "No file has been selected. Please select the file you wish to open.");
                 return;
             }
-            // Resolve the application controller and retrieve the master password model
-            MasterPasswordModel masterPasswordModel = (DI.Container.GetInstance<IApplicationController>()).GetMasterPassword();
 
-            // Check if the master password has a key; if not, display a warning message and exit the method
+            // Retrieve the master password model to access decryption keys
+            MasterPasswordModel masterPasswordModel = DI.Container.GetInstance<IApplicationController>().GetMasterPassword();
+
+            // Verify that a master password key is available
             if (!masterPasswordModel.HasKey)
             {
-                MessageBox.Show(this, "No files were downloaded.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(this, "Master password is required to decrypt files.", "Canceled", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                // Set the cursor to the wait cursor to indicate processing
                 this.Cursor = Cursors.WaitCursor;
+
                 FileModel fileModel = (FileModel)this.lstFiles.SelectedItems[0].Tag;
 
-
+                // Determine the path for the file to open
                 string fileToOpen = fileManagementService.GetOriginalFile(fileModel);
 
+                // Decrypt and open the file if it does not exist in its original location
                 if (!File.Exists(fileToOpen))
                 {
                     string decryptedFile = fileEncryptionService.DecryptFile(fileModel.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
-
-                    var app =
-                        DI.Container.GetInstance<IApplicationController>();
-
                     app.OpenFileInDefaultApplication(this, decryptedFile);
                 }
                 else
@@ -394,39 +449,48 @@ namespace GuardianVault
                     app.OpenFileInDefaultApplication(this, fileToOpen);
                 }
 
+                // Refresh file listing to reflect changes, if any
                 this.refreshFilesMenuItem_Click(null, null);
-
             }
             finally
             {
-                // Reset the cursor to the default cursor after processing is complete
                 this.Cursor = Cursors.Default;
             }
         }
 
+        /// <summary>
+        /// Handles the double-click event on the file list view, effectively shortcutting the file open/edit action.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lstFiles_DoubleClick(object sender, EventArgs e)
         {
             if (this.lstFiles.Items.Count == 0 || this.lstFiles.SelectedItems.Count == 0)
                 return;
 
+            // Trigger the open/edit menu item click event
             this.openEditFileMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// This method deletes the selected files from the file system after a confirmation from the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteFileMenuItem_Click(object sender, EventArgs e)
         {
             if (this.lstFiles.SelectedItems.Count == 0)
             {
-                this.app.ShowErrorMessage(this, "No file has been selected. Please select the files you wish to decrypt.");
-
+                this.app.ShowErrorMessage(this, "No file has been selected. Please select the files you wish to delete.");
                 return;
             }
 
+            // Confirm deletion from the user
             if (MessageBox.Show(this, "Are you sure you wish to delete the selected files?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
             {
-                // Set the cursor to the wait cursor to indicate processing
                 this.Cursor = Cursors.WaitCursor;
 
                 foreach (ListViewItem listViewItem in this.lstFiles.SelectedItems)
@@ -435,22 +499,30 @@ namespace GuardianVault
                     File.Delete(fileModel.Path);
                 }
 
-                // Reload the list of files in the lstFiles control to reflect the added files
+                // Reload file list to reflect changes
                 listViewUIService.LoadFiles(this.lstFiles, (FolderModel)this.lstFiles.Tag);
             }
             finally
             {
-                // Reset the cursor to the default cursor after processing is complete
                 this.Cursor = Cursors.Default;
             }
         }
 
+        /// <summary>
+        /// Reloads the list of files in the lstFiles control to reflect any changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void refreshFilesMenuItem_Click(object sender, EventArgs e)
         {
-            // Reload the list of files in the lstFiles control to reflect the added files
             listViewUIService.LoadFiles(this.lstFiles, (FolderModel)this.lstFiles.Tag);
         }
 
+        /// <summary>
+        /// Reloads the list of folders in the treeFiles control to reflect any changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -467,127 +539,149 @@ namespace GuardianVault
             }
         }
 
+        /// <summary>
+        /// Handles the click event for the "Delete Folder" menu item by attempting to delete the selected folder after user confirmation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = this.treeFiles.SelectedNode;
+
             if (selectedNode == null || selectedNode.Tag as FolderModel == null)
             {
+                // Show error message if no folder is selected
                 this.app.ShowErrorMessage(this, "No folder has been selected. Please select the folder you wish to delete.");
-
                 return;
             }
 
             FolderModel folder = (FolderModel)selectedNode.Tag;
 
+            // Prevent deletion of the root folder
             if (folder.IsRoot)
             {
-                this.app.ShowErrorMessage(this, "You canont delete the root folder in this application.");
+                this.app.ShowErrorMessage(this, "You cannot delete the root folder in this application.");
                 return;
             }
 
+            // Confirm with the user
             if (MessageBox.Show(this, $"Are you sure you wish to delete the selected folder '{folder.Path}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
+
             try
             {
+                // Attempt to delete the folder and all its contents
                 Directory.Delete(folder.Path, true);
 
+                // Refresh the tree
                 this.refreshToolStripMenuItem_Click(sender, e);
-
             }
             catch (Exception ex)
             {
-                this.app.ShowErrorMessage(this, "An error occured while attempting to delete the folder.");
-
+                this.app.ShowErrorMessage(this, "An error occurred while attempting to delete the folder.");
+                // Log the exception details
                 this.logger.LogError("Error deleting a folder: \n" + ex.ToString());
             }
         }
 
+        /// <summary>
+        /// This handler encrypts selected files after user confirmation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void encryptFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.lstFiles.SelectedItems.Count == 0)
             {
-                this.app.ShowErrorMessage(this, "No file has been selected. Please select the files you wish to decrypt.");
-
+                this.app.ShowErrorMessage(this, "No file has been selected. Please select the files you wish to encrypt.");
                 return;
             }
 
+            // Get the list of decrypted files from the selected items in the list view
             var list = listViewUIService.GetDecryptedFiles(this.lstFiles);
-            if (list.Count == 0)
-                return;
+            if (list.Count == 0) return;
 
+            // Confirm with the user before proceeding with encryption and deletion of original files
             if (MessageBox.Show(this, "The original source files will be removed after encryption. Do you wish to continue?", "Confirm Encryption", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
             {
+                // Retrieve the master password
+                MasterPasswordModel masterPasswordModel = DI.Container.GetInstance<IApplicationController>().GetMasterPassword();
+                if (!masterPasswordModel.HasKey) return;
 
-                // Resolve the application controller and retrieve the master password model
-                MasterPasswordModel masterPasswordModel = (DI.Container.GetInstance<IApplicationController>()).GetMasterPassword();
-
-                // Check if the master password has a key
-                if (!masterPasswordModel.HasKey)
-                    return;
-
-                // Set the cursor to the wait cursor to indicate processing
                 this.Cursor = Cursors.WaitCursor;
 
-
+                // Process each file for encryption
                 foreach (FileModel fileModel in list)
                 {
                     string originalFile = fileManagementService.GetOriginalFile(fileModel);
-
-                    if (!File.Exists(originalFile))
-                        continue;
+                    if (!File.Exists(originalFile)) continue;
 
                     if (fileManagementService.IsFileWritable(originalFile))
                     {
-                        //File is writable so encrypt it
+                        // Encrypt the file using the master password hash and current encryption level settings
                         fileEncryptionService.EncryptFile(originalFile, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
-
-                        //Delete the original file
+                        
+                        // Delete the original file after successful encryption
                         File.Delete(originalFile);
                     }
                 }
 
-                // Reload the list of files in the lstFiles control to reflect the added files
+                // Refresh the file list view to reflect the changes
                 listViewUIService.LoadFiles(this.lstFiles, (FolderModel)this.lstFiles.Tag);
-
             }
             finally
             {
-                // Reset the cursor to the default cursor after processing is complete
                 this.Cursor = Cursors.Default;
             }
         }
 
+        /// <summary>
+        /// Handles the click event for the "Explore Folder" menu item. Opens the selected folder in Windows Explorer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exploreFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = this.treeFiles.SelectedNode;
+
             if (selectedNode == null || selectedNode.Tag as FolderModel == null)
             {
+                // Display error message if no folder is selected
                 this.app.ShowErrorMessage(this, "No folder has been selected. Please select the folder you wish to explore.");
-
                 return;
             }
 
             FolderModel folder = (FolderModel)selectedNode.Tag;
+
+            // Open the selected folder in Windows Explorer
             app.OpenFolderInExplorer(this, folder.Path);
         }
 
+        /// <summary>
+        /// Prompts the user to create a new folder within the selected folder.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addNewFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = this.treeFiles.SelectedNode;
+
             if (selectedNode == null || selectedNode.Tag as FolderModel == null)
             {
-                this.app.ShowErrorMessage(this, "No folder has been selected. Please select the folder you wish to explore.");
-
+                // Display error message if no folder is selected
+                this.app.ShowErrorMessage(this, "No folder has been selected. Please select the folder where you wish to add a new folder.");
                 return;
             }
 
             FolderModel folder = (FolderModel)selectedNode.Tag;
-
             var view = DI.Container.GetInstance<IView<FolderModel>>();
+
+            // Display the new folder dialog to get new folder name
             var newFolder = view.ShowView(this, folder);
+
             if (newFolder != null)
             {
                 if (Directory.Exists(newFolder.Path))
@@ -595,31 +689,41 @@ namespace GuardianVault
 
                 try
                 {
+                    // Attempt to create the new folder in the file system
                     Directory.CreateDirectory(newFolder.Path);
 
-                    //Refresh to folders
+                    // Refresh the tree view to show the new folder
                     this.refreshToolStripMenuItem_Click(null, null);
                 }
                 catch (Exception ex)
                 {
-                    this.app.ShowErrorMessage(this, "An error occured while attempting to create the folder.");
-
+                    this.app.ShowErrorMessage(this, "An error occurred while attempting to create the folder.");
+                    // Log the exception details
                     this.logger.LogError("Error creating folder: \n" + ex.ToString());
                 }
             }
         }
 
+        /// <summary>
+        /// Opens the folder associated with the list view in Windows Explorer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exploreFolderFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Retrieve the folder model from the tag property of lstFiles
+            // Retrieve the FolderModel associated with the ListView
             FolderModel folder = this.lstFiles.Tag as FolderModel;
+
             if (folder == null)
             {
-                this.app.ShowErrorMessage(this, "No folder has been selected.");
+                // Display error message if no folder is associated with the list view
+                this.app.ShowErrorMessage(this, "No folder has been selected. Please select a folder to explore.");
                 return;
             }
 
+            // Open the folder in Windows Explorer
             app.OpenFolderInExplorer(this, folder.Path);
         }
+
     }
 }

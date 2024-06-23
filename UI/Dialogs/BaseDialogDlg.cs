@@ -10,10 +10,14 @@ using System.Windows.Forms;
 
 namespace GuardianVault
 {
+    /// <summary>
+    /// Provides the base dialog form all dialogs in the application.
+    /// </summary>
     public partial class BaseDialogDlg : Form
     {
         public BaseDialogDlg()
         {
+            // Initializes the form components
             InitializeComponent();
         }
     }

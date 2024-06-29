@@ -31,6 +31,12 @@ namespace GuardianVault
         /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            // Ask if the user really wants to exit the application
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "Exit Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dialogResult == DialogResult.No)
+                return;
+
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }

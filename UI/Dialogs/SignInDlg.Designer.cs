@@ -52,7 +52,6 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(371, 22);
             this.txtUserName.TabIndex = 1;
-            this.txtUserName.Text = "michael";
             // 
             // txtPassword
             // 
@@ -60,8 +59,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(371, 22);
-            this.txtPassword.TabIndex = 3;
-            this.txtPassword.Text = "Cs983133";
+            this.txtPassword.TabIndex = 2;
             // 
             // label2
             // 
@@ -101,7 +99,7 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Use your Windows credentials to sign-in.";
             // 
-            // SignInView
+            // SignInDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -113,7 +111,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.label1);
-            this.Name = "SignInView";
+            this.Name = "SignInDlg";
             this.Text = "Sign-In";
             this.ResumeLayout(false);
             this.PerformLayout();

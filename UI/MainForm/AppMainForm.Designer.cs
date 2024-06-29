@@ -62,6 +62,7 @@
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.operationStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.mainToolStrip.SuspendLayout();
             this.treeContextMenu.SuspendLayout();
             this.lstFilesContextMenu.SuspendLayout();
@@ -72,7 +73,8 @@
             this.mainToolStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.masterPasswordToolStripButton,
-            this.settingsToolStripButton});
+            this.settingsToolStripButton,
+            this.helpToolStripButton});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 0);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(1256, 54);
@@ -128,13 +130,14 @@
             this.exploreFolderToolStripMenuItem,
             this.refreshToolStripMenuItem});
             this.treeContextMenu.Name = "treeContextMenu";
-            this.treeContextMenu.Size = new System.Drawing.Size(176, 206);
+            this.treeContextMenu.Size = new System.Drawing.Size(219, 206);
             this.treeContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.treeContextMenu_Opening);
             // 
             // addFilesToolStripMenuItem
             // 
             this.addFilesToolStripMenuItem.Name = "addFilesToolStripMenuItem";
-            this.addFilesToolStripMenuItem.Size = new System.Drawing.Size(175, 38);
+            this.addFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.addFilesToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
             this.addFilesToolStripMenuItem.Text = "Add Files...";
             this.addFilesToolStripMenuItem.Click += new System.EventHandler(this.addFilesMenuItem_Click);
             // 
@@ -142,32 +145,34 @@
             // 
             this.addNewFolderToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("addNewFolderToolStripMenuItem.Image")));
             this.addNewFolderToolStripMenuItem.Name = "addNewFolderToolStripMenuItem";
-            this.addNewFolderToolStripMenuItem.Size = new System.Drawing.Size(175, 38);
+            this.addNewFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.addNewFolderToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
             this.addNewFolderToolStripMenuItem.Text = "Add New Folder";
             this.addNewFolderToolStripMenuItem.Click += new System.EventHandler(this.addNewFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(172, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(215, 6);
             // 
             // deleteFolderToolStripMenuItem
             // 
             this.deleteFolderToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("deleteFolderToolStripMenuItem.Image")));
             this.deleteFolderToolStripMenuItem.Name = "deleteFolderToolStripMenuItem";
-            this.deleteFolderToolStripMenuItem.Size = new System.Drawing.Size(175, 38);
+            this.deleteFolderToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
             this.deleteFolderToolStripMenuItem.Text = "Delete Folder";
             this.deleteFolderToolStripMenuItem.Click += new System.EventHandler(this.deleteFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(172, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(215, 6);
             // 
             // exploreFolderToolStripMenuItem
             // 
             this.exploreFolderToolStripMenuItem.Name = "exploreFolderToolStripMenuItem";
-            this.exploreFolderToolStripMenuItem.Size = new System.Drawing.Size(175, 38);
+            this.exploreFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.exploreFolderToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
             this.exploreFolderToolStripMenuItem.Text = "Explore Folder";
             this.exploreFolderToolStripMenuItem.Click += new System.EventHandler(this.exploreFolderToolStripMenuItem_Click);
             // 
@@ -175,7 +180,7 @@
             // 
             this.refreshToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshToolStripMenuItem.Image")));
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(175, 38);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
             this.refreshToolStripMenuItem.Text = "Refresh";
             this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
@@ -245,26 +250,26 @@
             this.exploreFolderFileToolStripMenuItem,
             this.refreshFilesMenuItem});
             this.lstFilesContextMenu.Name = "treeContextMenu";
-            this.lstFilesContextMenu.Size = new System.Drawing.Size(175, 288);
+            this.lstFilesContextMenu.Size = new System.Drawing.Size(218, 288);
             this.lstFilesContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.lstFilesContextMenu_Opening);
             // 
             // addFilesMenuItem
             // 
             this.addFilesMenuItem.Name = "addFilesMenuItem";
-            this.addFilesMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.addFilesMenuItem.Size = new System.Drawing.Size(217, 38);
             this.addFilesMenuItem.Text = "Add Files...";
             this.addFilesMenuItem.Click += new System.EventHandler(this.addFilesMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(214, 6);
             // 
             // encryptFileToolStripMenuItem
             // 
             this.encryptFileToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("encryptFileToolStripMenuItem.Image")));
             this.encryptFileToolStripMenuItem.Name = "encryptFileToolStripMenuItem";
-            this.encryptFileToolStripMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.encryptFileToolStripMenuItem.Size = new System.Drawing.Size(217, 38);
             this.encryptFileToolStripMenuItem.Text = "Encrypt Files";
             this.encryptFileToolStripMenuItem.Click += new System.EventHandler(this.encryptFileToolStripMenuItem_Click);
             // 
@@ -272,39 +277,41 @@
             // 
             this.openEditFileMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openEditFileMenuItem.Image")));
             this.openEditFileMenuItem.Name = "openEditFileMenuItem";
-            this.openEditFileMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.openEditFileMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openEditFileMenuItem.Size = new System.Drawing.Size(217, 38);
             this.openEditFileMenuItem.Text = "Open/Edit File...";
             this.openEditFileMenuItem.Click += new System.EventHandler(this.openEditFileMenuItem_Click);
             // 
             // downloadFileMenuItem
             // 
             this.downloadFileMenuItem.Name = "downloadFileMenuItem";
-            this.downloadFileMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.downloadFileMenuItem.Size = new System.Drawing.Size(217, 38);
             this.downloadFileMenuItem.Text = "Download Files";
             this.downloadFileMenuItem.Click += new System.EventHandler(this.downloadFileMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(214, 6);
             // 
             // deleteFileMenuItem
             // 
             this.deleteFileMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("deleteFileMenuItem.Image")));
             this.deleteFileMenuItem.Name = "deleteFileMenuItem";
-            this.deleteFileMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.deleteFileMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.deleteFileMenuItem.Size = new System.Drawing.Size(217, 38);
             this.deleteFileMenuItem.Text = "Delete Files";
             this.deleteFileMenuItem.Click += new System.EventHandler(this.deleteFileMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
             // 
             // exploreFolderFileToolStripMenuItem
             // 
             this.exploreFolderFileToolStripMenuItem.Name = "exploreFolderFileToolStripMenuItem";
-            this.exploreFolderFileToolStripMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.exploreFolderFileToolStripMenuItem.Size = new System.Drawing.Size(217, 38);
             this.exploreFolderFileToolStripMenuItem.Text = "Explore Folder";
             this.exploreFolderFileToolStripMenuItem.Click += new System.EventHandler(this.exploreFolderFileToolStripMenuItem_Click);
             // 
@@ -312,7 +319,8 @@
             // 
             this.refreshFilesMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshFilesMenuItem.Image")));
             this.refreshFilesMenuItem.Name = "refreshFilesMenuItem";
-            this.refreshFilesMenuItem.Size = new System.Drawing.Size(174, 38);
+            this.refreshFilesMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.refreshFilesMenuItem.Size = new System.Drawing.Size(217, 38);
             this.refreshFilesMenuItem.Text = "Refresh";
             this.refreshFilesMenuItem.Click += new System.EventHandler(this.refreshFilesMenuItem_Click);
             // 
@@ -339,7 +347,16 @@
             this.operationStatusStrip.Size = new System.Drawing.Size(1256, 22);
             this.operationStatusStrip.TabIndex = 4;
             this.operationStatusStrip.Text = "statusStrip1";
-        
+            // 
+            // helpToolStripButton
+            // 
+            this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
+            this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.helpToolStripButton.Name = "helpToolStripButton";
+            this.helpToolStripButton.Size = new System.Drawing.Size(36, 51);
+            this.helpToolStripButton.Text = "Help";
+            this.helpToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.helpToolStripButton.Click += new System.EventHandler(this.helpToolStripButton_Click);
             // 
             // AppMainForm
             // 
@@ -357,7 +374,6 @@
             this.Name = "AppMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Guardian Vault Applicaiton";
-            this.Load += new System.EventHandler(this.Form_Loading);
             this.Shown += new System.EventHandler(this.Form_Shown);
             this.mainToolStrip.ResumeLayout(false);
             this.mainToolStrip.PerformLayout();
@@ -402,6 +418,7 @@
         private System.Windows.Forms.ToolStripMenuItem encryptFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exploreFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exploreFolderFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton helpToolStripButton;
     }
 }
 

@@ -27,6 +27,7 @@ namespace GuardianVault
         private readonly IApplicationController app;
         private readonly IUserSettingsController appSettings;
         private readonly IListViewUIService listViewUIService;
+        private bool disableExistConfirmation = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppMainForm"/> class.
@@ -64,17 +65,8 @@ namespace GuardianVault
             InitializeComponent();
 
             //Initialize default properties
-            this.treeFiles.ShowLines = true;
-        }
-
-        /// <summary>
-        /// Handles the Loading event of the form.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">.</param>
-        private void Form_Loading(object sender, EventArgs e)
-        {
-            // Add implementation here
+            this.treeFiles.ShowLines = true;    
+            this.FormClosing += Form_Closing;
         }
 
         /// <summary>
@@ -84,7 +76,17 @@ namespace GuardianVault
         /// <param name="e"></param>
         private void Form_Closing(object sender, FormClosingEventArgs e)
         {
-            // Add implementation here
+            if (disableExistConfirmation)
+                return;
+
+            // Ask if the user really wants to exit the application
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to exit?", "Exit Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dialogResult == DialogResult.No)
+            {
+                // If the user clicks "No", cancel the closing operation
+                e.Cancel = true;
+            }
         }
 
         /// <summary>
@@ -108,6 +110,7 @@ namespace GuardianVault
                 // Check if the master password has a key; if not, display a warning message and exit the method
                 if (!masterPasswordModel.HasKey)
                 {
+                    disableExistConfirmation = true;
                     this.Close();
                     return;
                 }
@@ -130,6 +133,7 @@ namespace GuardianVault
             {
                 logger.LogInformation($"Authentication failed or canceled.");
 
+                disableExistConfirmation = true;
                 // If authentication failed, close the application.
                 this.Close();
             }
@@ -301,11 +305,12 @@ namespace GuardianVault
             //Bring up the file selection view.
             var selectFilesView = DI.Container.GetInstance<IView<FileModel[]>>();
             var files = selectFilesView.ShowView(this, null);
-
             if (files != null)
             {
                 try
                 {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.AppendLine("Initiating encryption operation...");
                     // Set the cursor to the wait cursor to indicate processing
                     this.Cursor = Cursors.WaitCursor;
                     string[] fileNames = files.Select(fm => fm.Path).ToArray();
@@ -325,18 +330,25 @@ namespace GuardianVault
 
                         if (!fileManagementService.IsFileWritable(filePath))
                         {
-                            this.logger.LogWarning($"File {filePath} is in use. Skipping encrypting it.");
+                            string warning = $"File {filePath} is in use. Skipping encrypting it.";
+                            this.logger.LogWarning(warning);
+
+                            stringBuilder.AppendLine(warning);
 
                             continue;
                         }
 
                         // Encrypt the copied file using the provided master password hash and encryption level from user settings
                         fileEncryptionService.EncryptFile(filePath, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
+                        stringBuilder.AppendLine($"File Encrypted: {filePath}");
+                        // Delete the original file after successful encryption
+                        File.Delete(filePath);
                     }
 
                     // Reload the list of files in the lstFiles control to reflect the added files
                     listViewUIService.LoadFiles(this.lstFiles, folderModel);
 
+                    this.logger.LogInformation(stringBuilder.ToString());
                 }
                 finally
                 {
@@ -388,6 +400,8 @@ namespace GuardianVault
                     {
                         // Decrypt the file and obtain the path of the decrypted file
                         string decryptedFile = fileEncryptionService.DecryptFile(fileModel.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
+
+                        this.logger.LogWarning($"Your file was decrypted: {decryptedFile}");
 
                         // Copy the decrypted file to the selected path
                         File.Copy(decryptedFile, Path.Combine(selectedPath, Path.GetFileName(decryptedFile)), true);
@@ -442,6 +456,9 @@ namespace GuardianVault
                 if (!File.Exists(fileToOpen))
                 {
                     string decryptedFile = fileEncryptionService.DecryptFile(fileModel.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
+
+                    this.logger.LogWarning($"Your file was decrypted: {decryptedFile}");
+
                     app.OpenFileInDefaultApplication(this, decryptedFile);
                 }
                 else
@@ -573,6 +590,7 @@ namespace GuardianVault
                 // Attempt to delete the folder and all its contents
                 Directory.Delete(folder.Path, true);
 
+                this.refreshFilesMenuItem_Click(sender, e);
                 // Refresh the tree
                 this.refreshToolStripMenuItem_Click(sender, e);
             }
@@ -607,6 +625,9 @@ namespace GuardianVault
 
             try
             {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendLine("Initiating encryption operation...");
+
                 // Retrieve the master password
                 MasterPasswordModel masterPasswordModel = DI.Container.GetInstance<IApplicationController>().GetMasterPassword();
                 if (!masterPasswordModel.HasKey) return;
@@ -623,14 +644,24 @@ namespace GuardianVault
                     {
                         // Encrypt the file using the master password hash and current encryption level settings
                         fileEncryptionService.EncryptFile(originalFile, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
-                        
+
+                        stringBuilder.AppendLine($"File Encrypted: {originalFile}");
                         // Delete the original file after successful encryption
                         File.Delete(originalFile);
+                    }
+                    else
+                    {
+                        string warning = $"File {originalFile} is in use. Skipping encrypting it.";
+                        this.logger.LogWarning(warning);
+
+                        stringBuilder.AppendLine(warning);
                     }
                 }
 
                 // Refresh the file list view to reflect the changes
                 listViewUIService.LoadFiles(this.lstFiles, (FolderModel)this.lstFiles.Tag);
+
+                this.logger.LogInformation(stringBuilder.ToString());
             }
             finally
             {
@@ -725,5 +756,24 @@ namespace GuardianVault
             app.OpenFolderInExplorer(this, folder.Path);
         }
 
+        /// <summary>
+        /// Opens the help file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void helpToolStripButton_Click(object sender, EventArgs e)
+        {
+            string helpFilePath = System.IO.Path.Combine(Application.StartupPath, @"Documentation\Guardian Vault Application.chm");
+
+            try
+            {
+                // Attempt to open the help file
+                System.Diagnostics.Process.Start(helpFilePath);
+            }
+            catch
+            {
+                this.app.ShowErrorMessage(this, "Unable to open the help file.");
+            }
+        }
     }
 }

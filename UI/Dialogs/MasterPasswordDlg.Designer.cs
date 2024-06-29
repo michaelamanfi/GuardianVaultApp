@@ -42,7 +42,7 @@
             this.btnOK.Location = new System.Drawing.Point(283, 199);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 2;
+            this.btnOK.TabIndex = 3;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -52,7 +52,7 @@
             this.btnCancel.Location = new System.Drawing.Point(364, 199);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -98,7 +98,7 @@
             this.chRememberKey.Location = new System.Drawing.Point(12, 146);
             this.chRememberKey.Name = "chRememberKey";
             this.chRememberKey.Size = new System.Drawing.Size(180, 20);
-            this.chRememberKey.TabIndex = 11;
+            this.chRememberKey.TabIndex = 2;
             this.chRememberKey.Text = "Remember my secret key";
             this.chRememberKey.UseVisualStyleBackColor = true;
             // 

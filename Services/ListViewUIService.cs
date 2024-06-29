@@ -34,6 +34,13 @@ namespace GuardianVault
         {
             listView.Tag = folder;
             listView.Items.Clear();
+
+            if (folder == null || !Directory.Exists(folder.Path))
+            {
+                listView.Tag = null;
+                return;
+            }
+            
             foreach (var file in Directory.GetFiles(folder.Path, "*.encrypted"))
             {
                 var fileInfo = new FileInfo(file);

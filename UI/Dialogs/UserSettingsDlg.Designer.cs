@@ -60,7 +60,7 @@
             this.btnBrowse.Location = new System.Drawing.Point(424, 168);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowse.TabIndex = 2;
+            this.btnBrowse.TabIndex = 5;
             this.btnBrowse.Text = "Browse";
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
@@ -96,7 +96,7 @@
             this.encryptionLevelesDropdown.Location = new System.Drawing.Point(20, 91);
             this.encryptionLevelesDropdown.Name = "encryptionLevelesDropdown";
             this.encryptionLevelesDropdown.Size = new System.Drawing.Size(279, 24);
-            this.encryptionLevelesDropdown.TabIndex = 5;
+            this.encryptionLevelesDropdown.TabIndex = 2;
             // 
             // label2
             // 
@@ -108,7 +108,7 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Encryption Level";
             // 
-            // AppSettingsDlg
+            // UserSettingsDlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -121,7 +121,7 @@
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(5);
-            this.Name = "AppSettingsDlg";
+            this.Name = "UserSettingsDlg";
             this.Text = "User Settings";
             this.ResumeLayout(false);
             this.PerformLayout();

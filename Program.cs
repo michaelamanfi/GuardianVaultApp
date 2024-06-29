@@ -40,10 +40,14 @@ namespace GuardianVault
             var app = DI.Container.GetInstance<IApplicationController>();
             if (e.Exception as CryptographicException != null)
             {
+                DI.Container.GetInstance<ILogger>().LogError($"File encryption/decryption operation failed: {e.Exception.Message}");
+
                 app.ShowAppErrorMessage(mainForm, $"File encryption/decryption operation failed. Please verify that your master password is correct.");
             }
             else
             {
+                DI.Container.GetInstance<ILogger>().LogError($"An error has occured: {e.Exception}");
+
                 app.ShowAppErrorMessage(mainForm, $"An error has occured: {e.Exception.Message}");
             }
         }

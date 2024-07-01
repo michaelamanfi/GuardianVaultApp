@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace GuardianVault
@@ -11,8 +14,17 @@ namespace GuardianVault
     public class ApplicationController : IApplicationController
     {
         private readonly ISecureStorageService _storageService;
-        public ApplicationController(ISecureStorageService secureStorageService)
+        private readonly IFileManagementService _fileManagementService;
+        private readonly ILogger _logger;
+        private readonly IFileEncryptionService _fileEncryptionService;
+        public ApplicationController(ILogger logger, 
+            IFileManagementService fileManagementService,
+            IFileEncryptionService fileEncryptionService,
+            ISecureStorageService secureStorageService)
         {
+            this._logger = logger;
+            this._fileManagementService = fileManagementService;
+            this._fileEncryptionService = fileEncryptionService;
             this._storageService = secureStorageService;
         }
         /// <summary>
@@ -122,6 +134,101 @@ namespace GuardianVault
             else
             {
                 this.ShowErrorMessage(parent, "The specified folder does not exist.");
+            }
+        }
+
+        public void EncryptFiles(MasterPasswordModel masterPasswordModel,
+            UserSettingsModel userSettingsModel,
+            FolderModel folderModel,FileModel[] files)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Initiating encryption operation...");
+            string[] fileNames = files.Select(fm => fm.Path).ToArray();
+
+            // Iterate through all selected files
+            foreach (string fileName in fileNames)
+            {
+                // Construct the target file path in the current folder model
+                string filePath = $"{folderModel.Path}\\{Path.GetFileName(fileName)}";
+
+                if (string.Compare(filePath.ToLower(), fileName, true) != 0)
+                    // Copy the file to the target location with overwrite permission
+                    File.Copy(fileName, filePath, true);
+                else
+                    this._logger.LogWarning($"File {filePath} is in the encryption folder. Skipping file copy.");
+
+                if (!this._fileManagementService.IsFileWritable(filePath))
+                {
+                    string warning = $"File {filePath} is in use. Skipping encrypting it.";
+                    this._logger.LogWarning(warning);
+
+                    stringBuilder.AppendLine(warning);
+
+                    continue;
+                }
+
+                // Encrypt the copied file using the provided master password hash and encryption level from user settings
+                _fileEncryptionService.EncryptFile(filePath, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
+
+                stringBuilder.AppendLine($"File Encrypted: {filePath}");
+
+                // Delete the original file after successful encryption
+                File.Delete(filePath);
+            }
+
+            this._logger.LogInformation(stringBuilder.ToString());
+        }
+
+        public void EncryptFiles(MasterPasswordModel masterPasswordModel,
+            UserSettingsModel userSettingsModel,List<FileModel> files)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Initiating encryption operation...");
+
+            // Process each file for encryption
+            foreach (FileModel fileModel in files)
+            {
+                string originalFile = _fileManagementService.GetOriginalFile(fileModel);
+                if (!File.Exists(originalFile)) continue;
+
+                if (_fileManagementService.IsFileWritable(originalFile))
+                {
+                    // Encrypt the file using the master password hash and current encryption level settings
+                    _fileEncryptionService.EncryptFile(originalFile, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
+
+                    stringBuilder.AppendLine($"File Encrypted: {originalFile}");
+                    // Delete the original file after successful encryption
+                    File.Delete(originalFile);
+                }
+                else
+                {
+                    string warning = $"File {originalFile} is in use. Skipping encrypting it.";
+                    this._logger.LogWarning(warning);
+
+                    stringBuilder.AppendLine(warning);
+                }
+            }
+            this._logger.LogInformation(stringBuilder.ToString());
+        }
+
+        public void DecryptFiles(MasterPasswordModel masterPasswordModel,
+            UserSettingsModel userSettingsModel,
+            FileModel[] files,
+            string selectedPath)
+        {
+            // Decrypt and copy each selected file to the chosen path
+            foreach (FileModel fileModel in files)
+            {
+                // Decrypt the file and obtain the path of the decrypted file
+                string decryptedFile = _fileEncryptionService.DecryptFile(fileModel.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
+
+                this._logger.LogWarning($"Your file was decrypted: {decryptedFile}");
+
+                // Copy the decrypted file to the selected path
+                File.Copy(decryptedFile, Path.Combine(selectedPath, Path.GetFileName(decryptedFile)), true);
+
+                // Delete the decrypted file after copying if it's a temporary file
+                File.Delete(decryptedFile);
             }
         }
     }

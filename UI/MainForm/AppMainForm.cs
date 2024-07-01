@@ -309,46 +309,17 @@ namespace GuardianVault
             {
                 try
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.AppendLine("Initiating encryption operation...");
                     // Set the cursor to the wait cursor to indicate processing
                     this.Cursor = Cursors.WaitCursor;
-                    string[] fileNames = files.Select(fm => fm.Path).ToArray();
 
-
-                    // Iterate through all selected files
-                    foreach (string fileName in fileNames)
-                    {
-                        // Construct the target file path in the current folder model
-                        string filePath = $"{folderModel.Path}\\{Path.GetFileName(fileName)}";
-
-                        if (string.Compare(filePath.ToLower(), fileName, true) != 0)
-                            // Copy the file to the target location with overwrite permission
-                            File.Copy(fileName, filePath, true);
-                        else
-                            this.logger.LogWarning($"File {filePath} is in the encryption folder. Skipping file copy.");
-
-                        if (!fileManagementService.IsFileWritable(filePath))
-                        {
-                            string warning = $"File {filePath} is in use. Skipping encrypting it.";
-                            this.logger.LogWarning(warning);
-
-                            stringBuilder.AppendLine(warning);
-
-                            continue;
-                        }
-
-                        // Encrypt the copied file using the provided master password hash and encryption level from user settings
-                        fileEncryptionService.EncryptFile(filePath, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
-                        stringBuilder.AppendLine($"File Encrypted: {filePath}");
-                        // Delete the original file after successful encryption
-                        File.Delete(filePath);
-                    }
+                    //Entrypt the files.
+                    app.EncryptFiles(masterPasswordModel, 
+                        userSettingsModel, 
+                        folderModel, 
+                        files);
 
                     // Reload the list of files in the lstFiles control to reflect the added files
                     listViewUIService.LoadFiles(this.lstFiles, folderModel);
-
-                    this.logger.LogInformation(stringBuilder.ToString());
                 }
                 finally
                 {
@@ -395,20 +366,8 @@ namespace GuardianVault
                     IEnumerable<ListViewItem> selectedItems = this.lstFiles.SelectedItems.Cast<ListViewItem>().Where(item => item.Tag as FileModel != null);
                     var files = selectedItems.Select(item => item.Tag as FileModel).ToList();
 
-                    // Decrypt and copy each selected file to the chosen path
-                    foreach (FileModel fileModel in files)
-                    {
-                        // Decrypt the file and obtain the path of the decrypted file
-                        string decryptedFile = fileEncryptionService.DecryptFile(fileModel.Path, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
-
-                        this.logger.LogWarning($"Your file was decrypted: {decryptedFile}");
-
-                        // Copy the decrypted file to the selected path
-                        File.Copy(decryptedFile, Path.Combine(selectedPath, Path.GetFileName(decryptedFile)), true);
-
-                        // Delete the decrypted file after copying if it's a temporary file
-                        File.Delete(decryptedFile);
-                    }
+                    //Decrypt selected files.
+                    this.app.DecryptFiles(masterPasswordModel, userSettingsModel, files.ToArray(), selectedPath);
 
                     // Open the destination folder in Windows Explorer
                     app.OpenFolderInExplorer(this, selectedPath);
@@ -625,43 +584,19 @@ namespace GuardianVault
 
             try
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine("Initiating encryption operation...");
-
-                // Retrieve the master password
-                MasterPasswordModel masterPasswordModel = DI.Container.GetInstance<IApplicationController>().GetMasterPassword();
-                if (!masterPasswordModel.HasKey) return;
 
                 this.Cursor = Cursors.WaitCursor;
 
-                // Process each file for encryption
-                foreach (FileModel fileModel in list)
-                {
-                    string originalFile = fileManagementService.GetOriginalFile(fileModel);
-                    if (!File.Exists(originalFile)) continue;
+                // Retrieve the master password
+                MasterPasswordModel masterPasswordModel = DI.Container.GetInstance<IApplicationController>().GetMasterPassword();
+                if (!masterPasswordModel.HasKey)
+                    return;
 
-                    if (fileManagementService.IsFileWritable(originalFile))
-                    {
-                        // Encrypt the file using the master password hash and current encryption level settings
-                        fileEncryptionService.EncryptFile(originalFile, masterPasswordModel.HashValue, userSettingsModel.EncryptionLevel);
-
-                        stringBuilder.AppendLine($"File Encrypted: {originalFile}");
-                        // Delete the original file after successful encryption
-                        File.Delete(originalFile);
-                    }
-                    else
-                    {
-                        string warning = $"File {originalFile} is in use. Skipping encrypting it.";
-                        this.logger.LogWarning(warning);
-
-                        stringBuilder.AppendLine(warning);
-                    }
-                }
+                // Encrypt selected files
+                this.app.EncryptFiles(masterPasswordModel, userSettingsModel, list);
 
                 // Refresh the file list view to reflect the changes
                 listViewUIService.LoadFiles(this.lstFiles, (FolderModel)this.lstFiles.Tag);
-
-                this.logger.LogInformation(stringBuilder.ToString());
             }
             finally
             {

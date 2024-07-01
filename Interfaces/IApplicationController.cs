@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace GuardianVault
 {
@@ -45,5 +46,36 @@ namespace GuardianVault
         /// </summary>
         /// <returns>The current MasterPasswordModel containing details of the master password.</returns>
         MasterPasswordModel GetMasterPassword();
+
+        /// <summary>
+        /// Encrypts an array files and a folder with the given encryption settings and master password.
+        /// </summary>
+        /// <param name="masterPasswordModel">The master password model containing the encryption key.</param>
+        /// <param name="userSettingsModel">User-defined settings that may affect encryption, such as encryption level.</param>
+        /// <param name="folderModel">The folder model containing information about the folder to encrypt.</param>
+        /// <param name="files">An array of file models representing the files to be encrypted.</param>
+        void EncryptFiles(MasterPasswordModel masterPasswordModel,
+                                 UserSettingsModel userSettingsModel,
+                                 FolderModel folderModel, FileModel[] files);
+
+        /// <summary>
+        /// Encrypts a list of files with the given encryption settings and master password.
+        /// </summary>
+        /// <param name="masterPasswordModel">The master password model containing the encryption key.</param>
+        /// <param name="userSettingsModel">User-defined settings that may affect encryption, such as encryption level.</param>
+        /// <param name="files">A list of file models representing the files to be encrypted.</param>
+        void EncryptFiles(MasterPasswordModel masterPasswordModel,
+                                 UserSettingsModel userSettingsModel, List<FileModel> files);
+
+        /// <summary>
+        /// Decrypts an array of files to the specified path.
+        /// </summary>
+        /// <param name="masterPasswordModel">The model containing the master password used for decryption.</param>
+        /// <param name="userSettingsModel">User settings that affect decryption processes and configurations.</param>
+        /// <param name="files">An array of FileModel which contains the files to be decrypted.</param>
+        /// <param name="path">The target path where the decrypted files will be saved.</param>
+        void DecryptFiles(MasterPasswordModel masterPasswordModel,
+                                 UserSettingsModel userSettingsModel,
+                                 FileModel[] files, string path);
     }
 }
